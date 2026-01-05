@@ -70,6 +70,7 @@ private:
 
     // Shrink mode buffer
     bool enable_shrink = false;
+    bool _disable_ll_layered = false;
     int* mask_buffer_ptr = nullptr;
     int* sync_buffer_ptr = nullptr;
 
@@ -120,7 +121,8 @@ public:
            bool low_latency_mode,
            bool explicitly_destroy,
            bool enable_shrink,
-           bool use_fabric);
+           bool use_fabric,
+           bool _disable_ll_layered);
 
     ~Buffer() noexcept(false);
 
@@ -279,6 +281,12 @@ public:
         const torch::Tensor& topk_weights,
         const torch::Tensor& src_info,
         const torch::Tensor& layout_range,
+        bool overlap,
+        const std::optional<torch::Tensor>& packed_recv_count,
+        const std::optional<torch::Tensor>& comp_signal,
+        int block_m,
+        int threshold,
+        int num_sms,
         const std::optional<torch::Tensor>& combine_wait_recv_cost_stats,
         int num_max_dispatch_tokens_per_rank,
         int num_experts,

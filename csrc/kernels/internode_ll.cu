@@ -699,7 +699,7 @@ void dispatch(bool disable_ll_layered,
               int num_device_sms,
               cudaStream_t stream,
               int phases) {
-    constexpr int kNumMaxTopK = 11;
+    constexpr int kNumMaxTopK = 16; // for kimi-k3 top 16
     const int num_warp_groups = ceil_div(num_experts, num_device_sms);
     const int num_warps_per_group = 32 / num_warp_groups;
     EP_HOST_ASSERT(num_warp_groups > 0 and num_warps_per_group > 0);
@@ -1505,7 +1505,7 @@ void combine(bool disable_ll_layered,
              cudaStream_t stream,
              int phases,
              bool zero_copy) {
-    constexpr int kNumMaxTopk = 11;
+    constexpr int kNumMaxTopk = 16; // for kimi-k3 top 16
     int num_warp_groups, num_warps_per_group, num_recv_per_sm, num_warps;
 
     if (overlap == true and phases == LOW_LATENCY_SEND_PHASE) {
